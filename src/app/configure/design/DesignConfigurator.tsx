@@ -15,6 +15,9 @@ import { ArrowRight, Check, ChevronsUpDown } from "lucide-react"
 import { BASE_PRICE } from "@/config/product"
 import { useRef, useState } from 'react'
 import { useUploadThing } from "@/lib/uploadthing"
+import { useToast } from "@/components/ui/use-toast"
+import { useMutation } from "@tanstack/react-query"
+import { SaveConfigArgs } from "./actions"
 
 
 
@@ -27,6 +30,14 @@ interface DesignConfiguratorProps {
   }
 }
 export  function DesignConfigurator({ imageUrl, configId, imageDimensions}: DesignConfiguratorProps) {
+  const  { toast } = useToast()
+  const { mutate: saveConfig } = useMutation({
+    mutationKey: ["save-config"],
+    mutationFn: async (args:SaveConfigArgs) => {
+
+    }
+  })
+
   const [options, setOptions] = useState
   <{
     color: (typeof COLORS)[number]
@@ -94,9 +105,13 @@ export  function DesignConfigurator({ imageUrl, configId, imageDimensions}: Desi
       const blob = base64ToBlob(base64Data, "image/png")
       const file = new File([blob], "filename.png", {type: 'image/png' })
 
-      startUpload([file], { configId })
+      await  startUpload([file], { configId })
     } catch (error) {
-      
+      toast({
+        title:"Something went wrong",
+        description: "There was problem sabving your config, please try again.",
+        variant:"destructive"
+      })
     }
   }
 

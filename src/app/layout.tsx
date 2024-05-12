@@ -4,6 +4,7 @@ import "./globals.css";
 import { NavBar } from "@/components/NavBar";
 import { Footer } from "@/components/Footer";
 import { Toaster } from "@/components/ui/toaster";
+import { Provider } from "@/components/Provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,7 +24,9 @@ export default function RootLayout({
       <NavBar />
       <main className='flex grainy-light flex-col min-h-[calc(100vh-3.5rem-1px)]'>
         <div className='flex-1 flex flex-col h-full'>
-          {children}
+          <Provider>
+           {children}
+          </Provider>
         </div>
         <Footer />
       </main>
