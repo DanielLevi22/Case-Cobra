@@ -1,10 +1,11 @@
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
-import { Table, TableHeader, TableRow } from "@/components/ui/table"
+import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components/ui/table"
 import { db } from "@/db/prisma"
 import { formatPrice } from "@/lib/utils"
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server"
 import { notFound } from "next/navigation"
+import { StatusDropDown } from "./StatusDropDown"
 
 export  default async function Page() {
 
@@ -110,6 +111,29 @@ export  default async function Page() {
                 <TableHeader className="text-right">Amount</TableHeader>
               </TableRow>
             </TableHeader>
+
+
+            <TableBody>
+              {orders.map((order )=> (
+                <TableRow key={order.id} className="bg-accent">
+                  <TableCell>
+                    <div className="font-medium">
+                     {order.shippingAddress?.name}
+                    </div>
+                    <div className="hidden text-sm text-muted-foreground md:inline">
+                      {order.user?.email}
+                    </div>
+                  </TableCell>
+                  <TableCell className="hidden sm:table-cell">
+                    <StatusDropDown id={order.id} orderStatus={order.status}/>
+                  </TableCell>
+                  <TableCell className="hidden md:table-cell">{order.createdAt.toLocaleDateString()}</TableCell>
+                  <TableCell className="text-right">
+                    {formatPrice(order.amount)}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
           </Table>
 
         </div>
