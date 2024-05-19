@@ -1,3 +1,5 @@
+"use server";
+
 import { db } from "@/db/prisma";
 import { OrderStatus } from "@prisma/client";
 
