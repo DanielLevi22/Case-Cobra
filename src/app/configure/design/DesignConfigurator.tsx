@@ -312,7 +312,7 @@ export  function DesignConfigurator({ imageUrl, configId, imageDimensions}: Desi
               <Button 
                 isLoading={isPending}
                 disabled={isPending}
-                loadingText="Saving..."
+                loadingText="Saving"
                 size="sm" 
                 className="w-full" 
                 onClick={() => saveConfig({
